@@ -30,7 +30,7 @@ export default function LinkTable() {
     return (
         <table className="w-3/5 mx-auto mt-10 border">
             <thead>
-                <tr className="bg-gray-200">
+                <tr className="bg-yellow">
                     <th className="p-2 border">Short Code</th>
                     <th className="p-2 border">URL</th>
                     <th className="p-2 border">Clicks</th>
@@ -48,7 +48,11 @@ export default function LinkTable() {
                 ) : (
                     links.map((item) => (
                         <tr key={item.code}>
-                            <td className="p-2 border">{item.code}</td>
+                            <td className="p-2 border text-blue-600 underline">
+                                <a href={`/${item.code}`} target="_blank">
+                                    {item.code}
+                                </a>
+                            </td>
 
                             <td className="p-2 border truncate max-w-xs">
                                 <a href={item.targetUrl} className="text-blue-600 underline" target="_blank">
