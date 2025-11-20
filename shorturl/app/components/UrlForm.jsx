@@ -20,14 +20,15 @@ export default function UrlForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch("/api/link", {
+        const res = await fetch("/api/links", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
         });
 
         if (!res.ok) {
-            alert("Error creating short link");
+            const errorMessage = await res.text();
+            alert(errorMessage);
             return;
         }
 

@@ -23,12 +23,20 @@ export async function POST(request) {
         return new Response("Code already exists", { status: 409 });
     }
 
-    const link = await prisma.link.create({
+    const links = await prisma.link.create({
         data: {
             code: finalCode,
             targetUrl,
         },
     });
 
-    return NextResponse.json(link);
+    return NextResponse.json(links);
+}
+
+export async function GET() {
+    const links = await prisma.link.findMany({
+        orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(links);
 }
