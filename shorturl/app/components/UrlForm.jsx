@@ -7,7 +7,7 @@ export default function UrlForm() {
 
 
 
-    const [data, setData] = useState({ shortCode: '', fullUrl: '' })
+    const [data, setData] = useState({ code: "", targetUrl: "" });
 
     const handleChange = (e) => {
 
@@ -17,13 +17,25 @@ export default function UrlForm() {
 
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(data)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    }
+        const res = await fetch("/api/link", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
 
+        if (!res.ok) {
+            alert("Error creating short link");
+            return;
+        }
 
+        const result = await res.json();
+        console.log(result);
+
+        setData({ code: "", targetUrl: "" });
+    };
 
 
 
@@ -36,8 +48,8 @@ export default function UrlForm() {
             <input
                 type="text"
                 placeholder="Custom Code (Optional)"
-                name="shortCode"
-                value={data.shortCode}
+                name="code"
+                value={data.code}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
             />
@@ -45,10 +57,10 @@ export default function UrlForm() {
             <input
                 type="text"
                 placeholder="Enter long URL"
-                value={data.fullUrl}
+                value={data.targetUrl}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                name="fullUrl"
+                name="targetUrl"
                 required
             />
 
